@@ -12,6 +12,12 @@ on:
         type: choice
         options:
           - SM-T220
+      region:
+        description: "Device Region"
+        required: true
+        type: choice
+        options:
+          - BTU
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -25,5 +31,10 @@ jobs:
           sudo apt-get install simg2img lz4
           pip3 install git+https://github.com/samloader/samloader.git
           echo $GITHUB_WORKSPACE
+      
+      - name: Download Firmware
+        run: |
+          $FWV = samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.device }} checkupdate
+          echo $FWV
 
 
