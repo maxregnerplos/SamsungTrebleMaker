@@ -31,10 +31,12 @@ jobs:
           sudo apt-get install simg2img lz4
           pip3 install git+https://github.com/samloader/samloader.git
           echo $GITHUB_WORKSPACE
+          echo ${{ github.event.inputs.device }}
+          echo ${{ github.event.inputs.region }}
       
       - name: Download Firmware
         run: |
-          FWV=$(samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.device }} checkupdate)
+          FWV=$(samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} checkupdate)
           echo $FWV
 
 
