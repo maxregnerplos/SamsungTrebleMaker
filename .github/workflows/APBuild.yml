@@ -34,7 +34,7 @@ jobs:
       
       - name: Download Firmware
         run: |
-          FWV=samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.device }} checkupdate
+          FWV=$(samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.device }} checkupdate)
           echo $FWV
 
 
