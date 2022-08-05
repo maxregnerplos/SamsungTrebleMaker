@@ -39,7 +39,7 @@ jobs:
           FWFileName="latestFW.zip.enc4"
           FWV=$(samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} checkupdate)
           echo $FWV
-          samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} download -v $FMV
+          echo samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} download -v $FMV
           samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} decrypt -v $FWFileName -V 4 -o latestFW.zip
           
 
