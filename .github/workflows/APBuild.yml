@@ -37,7 +37,7 @@ jobs:
       - name: Download Firmware
         run: |
           FWFileName="latestFW.zip.enc4"
-          FWV=$(samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} checkupdate)
+          FMV=$(samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} checkupdate)
           samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} download -v echo $FMV -O .
           samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} decrypt -v echo $FMV -i echo $FWFileName -V 4 -o latestFW.zip
           
