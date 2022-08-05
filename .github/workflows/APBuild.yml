@@ -38,8 +38,22 @@ jobs:
         run: |
           FWFileName="latestFW.zip.enc4"
           FWV=$(samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} checkupdate)
-          echo samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} download -v echo $FMV
+          samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} download -v echo $FMV
           samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} decrypt -v echo $FMV -i echo $FWFileName -V 4 -o latestFW.zip
+          
+      - name: Delete workflow runs
+        # You may pin to the exact commit or the version.
+        # uses: Mattraks/delete-workflow-runs@c1a2f0de3fa4134a2357de83c92acff6e298bb8a
+        uses: Mattraks/delete-workflow-runs@v2.0.3
+        with:
+          # The token used to authenticate.
+          token: ${{ github.token }}
+          # The name of the repository.
+          repository:  ${{ github.repository }}
+          # The number of days.
+          retain_days: 0
+          # The minimum runs to keep for each workflow.
+          keep_minimum_runs: 0
           
 
 
