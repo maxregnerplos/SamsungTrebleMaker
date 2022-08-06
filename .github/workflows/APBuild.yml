@@ -26,6 +26,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        
+      - name: Get OTATools and add to PATH Environment
+        run: |
+          # remember to get the OTATools Package from a file server - find a reliable host for this
+          # get the MD5-Tar-Tools Package as well
 
       - name: Dependencies
         run: |
@@ -43,10 +48,10 @@ jobs:
           samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} download -v $(echo $FMV) -o $(echo $FWFileName)
           echo "Decrypting Update Files"
           samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} decrypt -v $(echo $FMV) -i $(echo $FWFileName) -V 4 -o latestFW.zip
-          
+        
+      - name: Unzip Firmware and move AP to a certain file
+        
       - name: Delete workflow runs
-        # You may pin to the exact commit or the version.
-        # uses: Mattraks/delete-workflow-runs@c1a2f0de3fa4134a2357de83c92acff6e298bb8a
         uses: Mattraks/delete-workflow-runs@v2.0.3
         with:
           # The token used to authenticate.
