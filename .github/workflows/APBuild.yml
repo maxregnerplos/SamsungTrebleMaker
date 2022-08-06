@@ -24,7 +24,8 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
       - name: Dependencies
         run: |
@@ -34,11 +35,13 @@ jobs:
           echo ${{ github.event.inputs.device }}
           echo ${{ github.event.inputs.region }}
       
-      - name: Download Firmware
+      - name: Download and Decrypt Firmware
         run: |
           FWFileName="latestFW.zip.enc4"
           FMV=$(samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} checkupdate)
+          echo "Downloading latest update"
           samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} download -v $(echo $FMV) -o $(echo $FWFileName)
+          echo "Decrypting Update Files"
           samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} decrypt -v $(echo $FMV) -i $(echo $FWFileName) -V 4 -o latestFW.zip
           
       - name: Delete workflow runs
