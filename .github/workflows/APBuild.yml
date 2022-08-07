@@ -29,11 +29,11 @@ jobs:
         
       - name: Add OTATools PATH Environment
         run: |
-          export PATH=$PATH:/home/runner/work/SamsungTrebleMaker/SamsungTrebleMaker/otatools
+          export PATH=$PATH:/home/runner/work/SamsungTrebleMaker/SamsungTrebleMaker/otatools/bin/
 
-      - name: Dependencies
+      - name: Install Dependencies
         run: |
-          sudo apt-get install simg2img lz4
+          sudo apt-get install simg2img lz4 unzip
           pip3 install git+https://github.com/samloader/samloader.git
           echo $GITHUB_WORKSPACE
           echo ${{ github.event.inputs.device }}
@@ -48,14 +48,23 @@ jobs:
           echo "Decrypting Update Files"
           samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} decrypt -v $(echo $FMV) -i $(echo $FWFileName) -V 4 -o latestFW.zip
         
-      - name: Unzip Firmware and move AP to a seperate folder
+      - name: Unzip Firmware and Extract AP
         run: |
+          echo $FMV
           mkdir APFiles
           unzip latestFW.zip
           ls -l
           mv AP_*.tar.md5 ./APFiles
           cd APFiles
+          mkdir APExtracted
           ls -l
+          tar -xf AP_*.tar.md5 --verbose -C ./APExtracted
+          
+      - name: Measure and unpack super image
+        run: |
+          lz4 -d super.img.lz4 super.img
+          simg2img super.img super.ext4.img
+          OG_SUPER_SIZE=$(stat -c '%n %s' super.ext4.img)
           
         
       - name: Delete workflow runs
