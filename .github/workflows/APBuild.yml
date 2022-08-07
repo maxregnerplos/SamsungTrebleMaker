@@ -42,7 +42,7 @@ jobs:
       - name: Download and Decrypt Firmware
         run: |
           FWFileName="latestFW.zip.enc4"
-          FMV=$(samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} checkupdate)
+          export FMV=$(samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} checkupdate)
           echo $FMV
           echo "Downloading latest update"
           samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} download -v $(echo $FMV) -o $(echo $FWFileName)
@@ -63,7 +63,7 @@ jobs:
           
       - name: Measure and unpack super image
         run: |
-          pwd
+          cd APFiles/APExtracted
           lz4 -d super.img.lz4 super.img
           simg2img super.img super.ext4.img
           OG_SUPER_SIZE=$(stat -c '%n %s' super.ext4.img)
