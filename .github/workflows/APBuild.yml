@@ -55,6 +55,8 @@ jobs:
           unzip latestFW.zip
           ls -l
           mv AP_*.tar.md5 ./APFiles
+          cd APFiles
+          ls -l
           
         
       - name: Delete workflow runs
