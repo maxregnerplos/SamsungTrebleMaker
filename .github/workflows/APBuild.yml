@@ -63,6 +63,7 @@ jobs:
           
       - name: Measure and unpack super image
         run: |
+          pwd
           lz4 -d super.img.lz4 super.img
           simg2img super.img super.ext4.img
           OG_SUPER_SIZE=$(stat -c '%n %s' super.ext4.img)
