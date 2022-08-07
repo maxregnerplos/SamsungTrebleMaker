@@ -49,9 +49,12 @@ jobs:
           echo "Decrypting Update Files"
           samloader -m ${{ github.event.inputs.device }} -r ${{ github.event.inputs.region }} decrypt -v $(echo $FMV) -i $(echo $FWFileName) -V 4 -o latestFW.zip
         
-      - name: Unzip Firmware and move AP to a certain file
+      - name: Unzip Firmware and move AP to a seperate folder
         run: |
-          # unzip the firmware file and move the AP File
+          mkdir APFiles
+          unzip latestFW.zip
+          ls -l
+          
         
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@v2.0.3
