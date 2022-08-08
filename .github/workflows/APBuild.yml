@@ -30,6 +30,7 @@ jobs:
       - name: Add OTATools PATH Environment
         run: |
           export PATH=$PATH:/home/runner/work/SamsungTrebleMaker/SamsungTrebleMaker/otatools/bin/
+          echo "/home/runner/work/SamsungTrebleMaker/SamsungTrebleMaker/otatools/bin/" >> $GITHUB_PATH
 
       - name: Install Dependencies
         run: |
@@ -62,11 +63,14 @@ jobs:
           tar -xf AP_*.tar.md5 --verbose -C ./APExtracted
           
       - name: Measure and unpack super image
+        id: superImageSIze
         run: |
           cd APFiles/APExtracted
           lz4 -d super.img.lz4 super.img
           simg2img super.img super.ext4.img
           OG_SUPER_SIZE=$(stat -c '%n %s' super.ext4.img)
+          echo "::set-output name=ORIGINAL_SUPER_IMAGE_SIZE::$OG_SUPER_SIZE"
+          echo ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }}
           
         
       - name: Delete workflow runs
