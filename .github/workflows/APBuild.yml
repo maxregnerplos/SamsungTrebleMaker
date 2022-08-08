@@ -21,6 +21,22 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  urlfinder:
+    runs-on: ubuntu-latest
+    outputs:
+      finalurl: ${{ steps.get-url.outputs.finalurl }}
+    steps:
+      - name: Generate URL
+        id: get-url
+        uses: actions/github-script@v6.1.0
+        with:
+          script: |
+            let url = {}
+            let arch = "${{ github.event.inputs.arch }}"
+            let apps = "${{ github.event.inputs.apps }}"
+            let vndklite = "${{ github.events.inputs.vndklite }}"
+            let secure = "${{ github.events.inputs.secure }}"
+    
   build:
     runs-on: ubuntu-20.04
     steps:
@@ -71,16 +87,18 @@ jobs:
           chmod +x /home/runner/work/SamsungTrebleMaker/SamsungTrebleMaker/otatools/bin/lpmake
           lz4 -d super.img.lz4 super.img
           simg2img super.img super.ext4.img
-          OG_SUPER_SIZE=$(stat -c '%n %s' super.ext4.img)
+          OG_SUPER_SIZE=$(stat -c '%s' super.ext4.img)
           echo "::set-output name=ORIGINAL_SUPER_IMAGE_SIZE::$OG_SUPER_SIZE"
           mkdir superImageFiles
           ls -l
-          lpunpack super.ext4.img
+          lpunpack super.ext4.img ./superImageFiles
       
       - name: Replace old system image and measure size of partitions
         id: superImageSizes
         run: |
           cd APFiles/APExtracted/superImageFiles/
+          rm system.img
+          wget
           
       - name: Display Image Sizes
         id: gatherImageSizes
@@ -106,6 +124,7 @@ jobs:
     steps:
       - name: testRun
         run:
+          cd /
           ls
           
 
