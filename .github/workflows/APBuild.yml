@@ -67,11 +67,14 @@ jobs:
         run: |
           cd APFiles/APExtracted
           export PATH=$PATH:/home/runner/work/SamsungTrebleMaker/SamsungTrebleMaker/otatools/bin/
+          chmod +x /home/runner/work/SamsungTrebleMaker/SamsungTrebleMaker/otatools/bin/lpunpack
+          chmod +x /home/runner/work/SamsungTrebleMaker/SamsungTrebleMaker/otatools/bin/lpmake
           lz4 -d super.img.lz4 super.img
           simg2img super.img super.ext4.img
           OG_SUPER_SIZE=$(stat -c '%n %s' super.ext4.img)
           echo "::set-output name=ORIGINAL_SUPER_IMAGE_SIZE::$OG_SUPER_SIZE"
           mkdir superImageFiles
+          ls -l
           lpunpack super.ext4.img
       
       - name: Replace old system image and measure size of partitions
