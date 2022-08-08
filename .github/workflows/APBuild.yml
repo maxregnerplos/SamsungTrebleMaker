@@ -34,7 +34,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          sudo apt-get install simg2img lz4 unzip
+          sudo apt-get install simg2img lz4 unzip jq
           pip3 install git+https://github.com/samloader/samloader.git
           echo $GITHUB_WORKSPACE
           echo ${{ github.event.inputs.device }}
@@ -70,6 +70,17 @@ jobs:
           simg2img super.img super.ext4.img
           OG_SUPER_SIZE=$(stat -c '%n %s' super.ext4.img)
           echo "::set-output name=ORIGINAL_SUPER_IMAGE_SIZE::$OG_SUPER_SIZE"
+          mkdir superImageFiles
+          lpunpack super.ext4.img ./superImageFiles
+      
+      - name: Replace old system image and measure size of partitions
+        id: superImageSizes
+        run: |
+          cd APFiles/APExtracted/superImageFiles/
+          
+      - name: Display Image Sizes
+        id: gatherImageSizes
+        run: |
           echo ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }}
           
         
@@ -84,6 +95,13 @@ jobs:
           retain_days: 0
           # The minimum runs to keep for each workflow.
           keep_minimum_runs: 0
+  
+  compileFiles:
+    runs-on: windows-latest
+    steps:
+      - name: testRun
+        run:
+          ls
           
 
 
