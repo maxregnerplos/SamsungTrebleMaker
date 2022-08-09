@@ -59,22 +59,22 @@ jobs:
             let secure = "${{ github.events.inputs.secure }}"
             switch ( apps ) {
               case "gapps":
-                let appTest = "select(.name | test(\"gapps\")) | select(.name | test(\"gogapps\") | not) |";
+                appTest = "select(.name | test(\"gapps\")) | select(.name | test(\"gogapps\") | not) |";
                 break;
               case "gogapps":
-                let appTest = "select(.name | test(\"gogapps\")) |";
+                appTest = "select(.name | test(\"gogapps\")) |";
                 break;
               case "floss":
-                let appTest = "select(.name | test(\"floss\")) |";
+                appTest = "select(.name | test(\"floss\")) |";
                 break;
               default:
-                let appTest = "select(.name | test(\"vanilla\"))";
+                appTest = "select(.name | test(\"vanilla\"))";
                 break;
             }
             
             switch ( arch ) {
               case "arm32":
-                let archTest = "select(.name | test(\"arm32_binder64\")) |";
+                archTest = "select(.name | test(\"arm32_binder64\")) |";
                 switch ( apps ) {
                   case "gapps":
                     appTest = "select(.name | test(\"gogapps\")) |";
@@ -88,25 +88,25 @@ jobs:
                 };
                 break;
               default:
-                let archTest = "select(.name | test(\"arm64\")) |";
+                archTest = "select(.name | test(\"arm64\")) |";
                 break;
             }
             
             switch ( vndklite ) {
               case true:
-                let vndkliteTest = "select(.name | test(\"vndklite\")) |";
+                vndkliteTest = "select(.name | test(\"vndklite\")) |";
                 break;
               default:
-                let vndkliteTest = "select(.name | test(\"vndklite\") | not) |";
+                vndkliteTest = "select(.name | test(\"vndklite\") | not) |";
                 break;
             
             switch ( secure ) {
               case true:
-                let secureTest = "select(.name | test(\"secure\")) |";
+                secureTest = "select(.name | test(\"secure\")) |";
                 vndkliteTest = "select(.name | test(\"vndklite\")) |";
                 break;
               default:
-                let secureTest = "select(.name | test(\"secure\") | not) |";
+                secureTest = "select(.name | test(\"secure\") | not) |";
                 break;
             
             url.finalurlquery = "$appTest $archTest $secureTest $vndkliteTest"
