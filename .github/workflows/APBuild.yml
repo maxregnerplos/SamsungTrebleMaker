@@ -59,58 +59,72 @@ jobs:
             let secure = "${{ github.events.inputs.secure }}"
             switch ( apps ) {
               case "gapps":
+                echo "gapps selected";
                 appTest = "select(.name | test(\"gapps\")) | select(.name | test(\"gogapps\") | not) |";
                 break;
               case "gogapps":
+                echo "gogapps selected";
                 appTest = "select(.name | test(\"gogapps\")) |";
                 break;
               case "floss":
+                echo "floss apps selected";
                 appTest = "select(.name | test(\"floss\")) |";
                 break;
               default:
+                echo "vanilla apps selected";
                 appTest = "select(.name | test(\"vanilla\"))";
                 break;
             }
             
             switch ( arch ) {
               case "arm32":
+                echo "select arm32 arch";
                 archTest = "select(.name | test(\"arm32_binder64\")) |";
                 switch ( apps ) {
                   case "gapps":
+                    echo "select arm32 arch with gogapps";
                     appTest = "select(.name | test(\"gogapps\")) |";
                     break;
                   case "gogapps":
+                    echo "select arm32 arch with gogapps";
                     appTest = "select(.name | test(\"gogapps\")) |";
                     break;
                   default:
+                    echo "select arm32 arch with vanilla apps";
                     appTest = "select(.name | test(\"vanilla\")) |";
                     break;
                 }
                 break;
               default:
+                echo "select arm64 arch";
                 archTest = "select(.name | test(\"arm64\")) |";
                 break;
             }
             
             switch ( vndklite ) {
               case true:
+                echo "using vndklite";
                 vndkliteTest = "select(.name | test(\"vndklite\")) |";
                 break;
               default:
+                echo "not using vndklite";
                 vndkliteTest = "select(.name | test(\"vndklite\") | not) |";
                 break;
             }
             
             switch ( secure ) {
               case true:
+                echo "using secure";
                 secureTest = "select(.name | test(\"secure\")) |";
                 vndkliteTest = "select(.name | test(\"vndklite\")) |";
                 break;
               default:
+                echo "not using secure";
                 secureTest = "select(.name | test(\"secure\") | not) |";
                 break;
             }
             
+            echo "putting together query"
             finalurlquery = "$appTest $archTest $secureTest $vndkliteTest";
             echo $finalurlquery
                 
