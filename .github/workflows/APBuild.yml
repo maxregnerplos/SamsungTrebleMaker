@@ -52,79 +52,86 @@ jobs:
         uses: actions/github-script@v6.1.0
         with:
           script: |
+            echo Start setting values
             let url = {}
             let apps = "${{ github.event.inputs.apps }}"
             let arch = "${{ github.event.inputs.arch }}"
             let vndklite = "${{ github.events.inputs.vndklite }}"
             let secure = "${{ github.events.inputs.secure }}"
+            
+            echo apps switch
             switch ( apps ) {
               case "gapps":
-                echo "gapps selected";
+                echo gapps selected
                 appTest = "select(.name | test(\"gapps\")) | select(.name | test(\"gogapps\") | not) |";
                 break;
               case "gogapps":
-                echo "gogapps selected";
+                echo gogapps selected
                 appTest = "select(.name | test(\"gogapps\")) |";
                 break;
               case "floss":
-                echo "floss apps selected";
+                echo floss apps selected
                 appTest = "select(.name | test(\"floss\")) |";
                 break;
               default:
-                echo "vanilla apps selected";
+                echo vanilla apps selected
                 appTest = "select(.name | test(\"vanilla\"))";
                 break;
             }
             
+            echo arch switch
             switch ( arch ) {
               case "arm32":
-                echo "select arm32 arch";
+                echo select arm32 arch
                 archTest = "select(.name | test(\"arm32_binder64\")) |";
+                echo arm32 app select
                 switch ( apps ) {
                   case "gapps":
-                    echo "select arm32 arch with gogapps";
+                    echo select arm32 arch with gogapps
                     appTest = "select(.name | test(\"gogapps\")) |";
                     break;
                   case "gogapps":
-                    echo "select arm32 arch with gogapps";
+                    echo select arm32 arch with gogapps
                     appTest = "select(.name | test(\"gogapps\")) |";
                     break;
                   default:
-                    echo "select arm32 arch with vanilla apps";
+                    echo select arm32 arch with vanilla apps
                     appTest = "select(.name | test(\"vanilla\")) |";
                     break;
                 }
                 break;
               default:
-                echo "select arm64 arch";
+                echo select arm64 arch
                 archTest = "select(.name | test(\"arm64\")) |";
                 break;
             }
             
+            echo vndklite switch
             switch ( vndklite ) {
               case true:
-                echo "using vndklite";
+                echo using vndklite
                 vndkliteTest = "select(.name | test(\"vndklite\")) |";
                 break;
               default:
-                echo "not using vndklite";
+                echo not using vndklite
                 vndkliteTest = "select(.name | test(\"vndklite\") | not) |";
                 break;
             }
             
+            echo secure switch
             switch ( secure ) {
               case true:
-                echo "using secure";
+                echo using secure
                 secureTest = "select(.name | test(\"secure\")) |";
                 vndkliteTest = "select(.name | test(\"vndklite\")) |";
                 break;
               default:
-                echo "not using secure";
+                echo not using secure
                 secureTest = "select(.name | test(\"secure\") | not) |";
                 break;
             }
             
-            echo "putting together query"
+            echo putting together query
             finalurlquery = "$appTest $archTest $secureTest $vndkliteTest";
             echo $finalurlquery
                 
