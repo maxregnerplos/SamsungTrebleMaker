@@ -18,6 +18,27 @@ on:
         type: choice
         options:
           - BTU
+      arch:
+        description: "Device Architecture"
+        default: "arm64"
+        type: choice
+        options:
+          - arm64
+          - arm32
+      apps:
+        description: "Preinstalled Applications"
+        type: choice
+        options:
+          - floss
+          - gapps
+          - gogapps
+          - vanilla
+      vndklite:
+        description: "Vndklite ROM or not"
+        type: boolean
+      secure:
+        description: "Secure ROM or not"
+        type: boolean
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
