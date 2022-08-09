@@ -111,8 +111,8 @@ jobs:
                 break;
             }
             
-            url.finalurlquery = "$appTest $archTest $secureTest $vndkliteTest"
-            echo url.finalurlquery
+            finalurlquery = "$appTest $archTest $secureTest $vndkliteTest";
+            echo finalurlquery
                 
     
   build:
