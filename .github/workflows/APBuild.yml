@@ -77,13 +77,13 @@ jobs:
                 let archTest = "select(.name | test(\"arm32_binder64\")) |";
                 switch ( apps ) {
                   case "gapps":
-                    let appTest = "select(.name | test(\"gogapps\")) |";
+                    appTest = "select(.name | test(\"gogapps\")) |";
                     break;
                   case "gogapps":
-                    let appTest = "select(.name | test(\"gogapps\")) |";
+                    appTest = "select(.name | test(\"gogapps\")) |";
                     break;
                   default:
-                    let appTest = "select(.name | test(\"vanilla\")) |";
+                    appTest = "select(.name | test(\"vanilla\")) |";
                     break;
                 };
                 break;
@@ -103,7 +103,7 @@ jobs:
             switch ( secure ) {
               case true:
                 let secureTest = "select(.name | test(\"secure\")) |";
-                let vndkliteTest = "select(.name | test(\"vndklite\")) |";
+                vndkliteTest = "select(.name | test(\"vndklite\")) |";
                 break;
               default:
                 let secureTest = "select(.name | test(\"secure\") | not) |";
