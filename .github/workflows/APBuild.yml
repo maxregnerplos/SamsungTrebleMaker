@@ -112,7 +112,7 @@ jobs:
             }
             
             finalurlquery = "$appTest $archTest $secureTest $vndkliteTest";
-            echo finalurlquery
+            echo $finalurlquery
                 
     
   build:
