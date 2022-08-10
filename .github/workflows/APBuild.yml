@@ -57,7 +57,7 @@ jobs:
             vndklite = "${{ github.events.inputs.vndklite }}"
             secure = "${{ github.events.inputs.secure }}"
             
-            switch ( apps ) {
+            match apps:
               case "gapps":
                 appTest = "select(.name | test(\"gapps\")) | select(.name | test(\"gogapps\") | not) |";
                 break;
@@ -70,12 +70,12 @@ jobs:
               default:
                 appTest = "select(.name | test(\"vanilla\"))";
                 break;
-            }
             
-            switch ( arch ) {
+            
+            match arch:
               case "arm32":
                 archTest = "select(.name | test(\"arm32_binder64\")) |";
-                switch ( apps ) {
+                match apps:
                   case "gapps":
                     appTest = "select(.name | test(\"gogapps\")) |";
                     break;
@@ -85,32 +85,27 @@ jobs:
                   default:
                     appTest = "select(.name | test(\"vanilla\")) |";
                     break;
-                }
                 break;
               default:
                 archTest = "select(.name | test(\"arm64\")) |";
                 break;
-            }
             
-            switch ( vndklite ) {
-              case true:
+            match vndklite:
+              case "true":
                 vndkliteTest = "select(.name | test(\"vndklite\")) |";
                 break;
               default:
                 vndkliteTest = "select(.name | test(\"vndklite\") | not) |";
                 break;
-            }
             
-            echo secure switch
-            switch ( secure ) {
-              case true:
+            match secure:
+              case "true":
                 secureTest = "select(.name | test(\"secure\")) |";
                 vndkliteTest = "select(.name | test(\"vndklite\")) |";
                 break;
               default:
                 secureTest = "select(.name | test(\"secure\") | not) |";
                 break;
-            }
             
             finalurlquery = f"{appTest} {archTest} {vndkliteTest} {secureTest}";
             print(finalurlquery)
