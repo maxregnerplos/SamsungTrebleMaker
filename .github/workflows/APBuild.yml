@@ -72,7 +72,7 @@ jobs:
               case "floss":
                 appTest = "select(.name | test(\"floss\")) |";
                 break;
-              default:
+              case _:
                 appTest = "select(.name | test(\"vanilla\"))";
                 break;
             
@@ -91,7 +91,7 @@ jobs:
                     appTest = "select(.name | test(\"vanilla\")) |";
                     break;
                 break;
-              default:
+              case _:
                 archTest = "select(.name | test(\"arm64\")) |";
                 break;
             
@@ -99,7 +99,7 @@ jobs:
               case "true":
                 vndkliteTest = "select(.name | test(\"vndklite\")) |";
                 break;
-              default:
+              case _:
                 vndkliteTest = "select(.name | test(\"vndklite\") | not) |";
                 break;
             
@@ -108,7 +108,7 @@ jobs:
                 secureTest = "select(.name | test(\"secure\")) |";
                 vndkliteTest = "select(.name | test(\"vndklite\")) |";
                 break;
-              default:
+              case _:
                 secureTest = "select(.name | test(\"secure\") | not) |";
                 break;
             
