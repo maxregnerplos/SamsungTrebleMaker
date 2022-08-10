@@ -47,6 +47,11 @@ jobs:
     outputs:
       jobinfo: ${{ steps.get-url.outputs.finalurl }}
     steps:
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10" 
+            
       - name: Generate URL
         id: get-url
         shell: python
