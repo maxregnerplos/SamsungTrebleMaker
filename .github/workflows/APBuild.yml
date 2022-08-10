@@ -65,16 +65,12 @@ jobs:
             match apps:
               case "gapps":
                 appTest = "select(.name | test(\"gapps\")) | select(.name | test(\"gogapps\") | not) |";
-                break;
               case "gogapps":
                 appTest = "select(.name | test(\"gogapps\")) |";
-                break;
               case "floss":
                 appTest = "select(.name | test(\"floss\")) |";
-                break;
               case _:
                 appTest = "select(.name | test(\"vanilla\"))";
-                break;
             
             
             match arch:
@@ -83,34 +79,25 @@ jobs:
                 match apps:
                   case "gapps":
                     appTest = "select(.name | test(\"gogapps\")) |";
-                    break;
                   case "gogapps":
                     appTest = "select(.name | test(\"gogapps\")) |";
-                    break;
                   case _:
                     appTest = "select(.name | test(\"vanilla\")) |";
-                    break;
-                break;
               case _:
                 archTest = "select(.name | test(\"arm64\")) |";
-                break;
             
             match vndklite:
               case "true":
                 vndkliteTest = "select(.name | test(\"vndklite\")) |";
-                break;
               case _:
                 vndkliteTest = "select(.name | test(\"vndklite\") | not) |";
-                break;
             
             match secure:
               case "true":
                 secureTest = "select(.name | test(\"secure\")) |";
                 vndkliteTest = "select(.name | test(\"vndklite\")) |";
-                break;
               case _:
                 secureTest = "select(.name | test(\"secure\") | not) |";
-                break;
             
             finalurlquery = f"{appTest} {archTest} {vndkliteTest} {secureTest}";
             print(finalurlquery)
