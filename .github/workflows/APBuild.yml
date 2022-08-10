@@ -87,7 +87,7 @@ jobs:
                   case "gogapps":
                     appTest = "select(.name | test(\"gogapps\")) |";
                     break;
-                  default:
+                  case _:
                     appTest = "select(.name | test(\"vanilla\")) |";
                     break;
                 break;
