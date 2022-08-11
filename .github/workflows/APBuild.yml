@@ -164,7 +164,7 @@ jobs:
         run: |
           cd APFiles/APExtracted/superImageFiles/
           rm system.img
-          wget
+          # wget
           
       - name: Display Image Sizes
         id: gatherImageSizes
