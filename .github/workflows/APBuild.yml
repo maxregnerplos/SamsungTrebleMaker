@@ -142,7 +142,7 @@ jobs:
           cd APFiles
           mkdir APExtracted
           ls -l
-          tar -xf AP_*.tar.md5 super.img.lz4 --verbose -C ./APExtracted
+          tar -xf AP_*.tar.md5 super.img.lz4 meta-data --verbose -C ./APExtracted
           
       - name: Measure and unpack super image
         id: superImageSIze
