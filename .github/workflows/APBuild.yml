@@ -95,7 +95,7 @@ jobs:
             
             match secure:
               case "true":
-                secureTest = 'select(.name | test(\"secure\"))' |;
+                secureTest = 'select(.name | test(\"secure\")) |';
                 vndkliteTest = 'select(.name | test(\"vndklite\")) |';
               case _:
                 secureTest = 'select(.name | test(\"secure\") | not) |';
