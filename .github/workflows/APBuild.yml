@@ -169,43 +169,44 @@ jobs:
         run: |
           cd APFiles/APExtracted/superImageFiles/
           rm system.img
-          finalAddress = $(curl -s https://api.github.com/repos/phhusson/treble_experimentations/releases/latest | jq -r ${{ env.urlquery }}) -O system.img.xz
-          xz --decompress system.img.xz
-          rm system.img.xz
-          ODM_SIZE=$(stat -c '%s' odm.img)
-          SYSTEM_SIZE=$(stat -c '%s' system.img)
-          PRODUCT_SIZE=$(stat -c '%s' product.img)
-          VENDOR_SIZE=$(stat -c '%s' vendor.img)
-          TOTAL_SIZE=($(echo $ODM_SIZE) + $(echo $SYSTEM_SIZE) + $(echo $PRODUCT_SIZE) + $(echo $VENDOR_SIZE) + ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }})
+          finalAddress = $(curl -s https://api.github.com/repos/phhusson/treble_experimentations/releases/latest | jq -r ${{ env.urlquery }} )
+          echo $finalAddress
+          # xz --decompress system.img.xz
+          # rm system.img.xz
+          # ODM_SIZE=$(stat -c '%s' odm.img)
+          # SYSTEM_SIZE=$(stat -c '%s' system.img)
+          # PRODUCT_SIZE=$(stat -c '%s' product.img)
+          # VENDOR_SIZE=$(stat -c '%s' vendor.img)
+          # TOTAL_SIZE=($(echo $ODM_SIZE) + $(echo $SYSTEM_SIZE) + $(echo $PRODUCT_SIZE) + $(echo $VENDOR_SIZE) + ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }})
           
-          echo "::set-output name=SUM_OF_ALL_PARTITIONS_SIZES::$TOTAL_SIZE"
-          echo "::set-output name=ODM_PARTITION_SIZE::$ODM_SIZE"
-          echo "::set-output name=PRODUCT_PARTITION_SIZE::$PRODUCT_SIZE"
-          echo "::set-output name=SYSTEM_PARTITION_SIZE::$SYSTEM_SIZE"
-          echo "::set-output name=VENDOR_PARTITION_SIZE::$VENDOR_SIZE"
+          # echo "::set-output name=SUM_OF_ALL_PARTITIONS_SIZES::$TOTAL_SIZE"
+          # echo "::set-output name=ODM_PARTITION_SIZE::$ODM_SIZE"
+          # echo "::set-output name=PRODUCT_PARTITION_SIZE::$PRODUCT_SIZE"
+          # echo "::set-output name=SYSTEM_PARTITION_SIZE::$SYSTEM_SIZE"
+          # echo "::set-output name=VENDOR_PARTITION_SIZE::$VENDOR_SIZE"
           
           
           
       - name: Create New Super Image
         id: superImage
         run: |
-          cd APFiles/APExtracted/superImageFiles/
-          echo ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }}
-          lpmake --metadata-size 65536 \
-          --super-name super \
-          --metadata-slots 2 \
-          --device super:${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }} \
-          --group main:${{ steps.imageSizes.outputs.SUM_OF_ALL_PARTITIONS_SIZES }} \
-          --partition odm:readonly:${{ steps.imageSizes.outputs.ODM_PARTITION_SIZE }}:main \
-          --image odm=./odm.img \
-          --partition product:readonly:${{ steps.imageSizes.outputs.PRODUCT_PARTITION_SIZE }}:main \
-          --image product=./product.img \
-          --partition system:readonly:${{ steps.imageSizes.outputs.SYSTEM_PARTITION_SIZE }}:main \
-          --image system=./system.img \
-          --partition vendor:readonly:${{ steps.imageSizes.outputs.VENDOR_PARTITION_SIZE }}:main \
-          --image vendor=./vendor.img \
-          --sparse \
-          --output /output/super_new.img
+          # cd APFiles/APExtracted/superImageFiles/
+          # echo ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }}
+          # lpmake --metadata-size 65536 \
+          # --super-name super \
+          # --metadata-slots 2 \
+          # --device super:${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }} \
+          # --group main:${{ steps.imageSizes.outputs.SUM_OF_ALL_PARTITIONS_SIZES }} \
+          # --partition odm:readonly:${{ steps.imageSizes.outputs.ODM_PARTITION_SIZE }}:main \
+          # --image odm=./odm.img \
+          # --partition product:readonly:${{ steps.imageSizes.outputs.PRODUCT_PARTITION_SIZE }}:main \
+          # --image product=./product.img \
+          # --partition system:readonly:${{ steps.imageSizes.outputs.SYSTEM_PARTITION_SIZE }}:main \
+          # --image system=./system.img \
+          # --partition vendor:readonly:${{ steps.imageSizes.outputs.VENDOR_PARTITION_SIZE }}:main \
+          # --image vendor=./vendor.img \
+          # --sparse \
+          # --output /output/super_new.img
           
       - name: Test Super Output
         run: |
