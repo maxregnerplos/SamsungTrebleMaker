@@ -169,7 +169,7 @@ jobs:
         run: |
           cd APFiles/APExtracted/superImageFiles/
           rm system.img
-          wget $(curl -s https://api.github.com/repos/phhusson/treble_experimentations/releases/latest | jq -r ${{ env.urlquery }}) -O system.img.xz
+          finalAddress = $(curl -s https://api.github.com/repos/phhusson/treble_experimentations/releases/latest | jq -r ${{ env.urlquery }}) -O system.img.xz
           xz --decompress system.img.xz
           rm system.img.xz
           ODM_SIZE=$(stat -c '%s' odm.img)
