@@ -157,6 +157,8 @@ jobs:
           echo "::set-output name=ORIGINAL_SUPER_IMAGE_SIZE::$OG_SUPER_SIZE"
           mkdir superImageFiles
           ls -l
+          rm super.img.lz4
+          rm super.img
           lpunpack super.ext4.img ./superImageFiles
       
       - name: Replace old system image and measure size of partitions
