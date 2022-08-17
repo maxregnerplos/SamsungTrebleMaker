@@ -69,7 +69,7 @@ jobs:
             
             match apps:
               case "gapps":
-                appTest = 'select(.name | test(\"gapps\")) | select(.name | test(\"gogapps\") | not) |';
+                appTest = 'select(.name | test(\\"gapps\")) | select(.name | test(\"gogapps\") | not) |';
               case "gogapps":
                 appTest = 'select(.name | test(\"gogapps\")) |';
               case "floss":
@@ -136,40 +136,40 @@ jobs:
             
             match apps:
               case "gapps":
-                appTest = 'select(.name | test(\"gapps\")) | select(.name | test(\"gogapps\") | not) |';
+                appTest = 'select(.name | test(\\"gapps\\")) | select(.name | test(\\"gogapps\\") | not) |';
               case "gogapps":
-                appTest = 'select(.name | test(\"gogapps\")) |';
+                appTest = 'select(.name | test(\\"gogapps\\")) |';
               case "floss":
-                appTest = 'select(.name | test(\"floss\")) |';
+                appTest = 'select(.name | test(\\"floss\\")) |';
               case _:
-                appTest = 'select(.name | test(\"vanilla\"))';
+                appTest = 'select(.name | test(\\"vanilla\\"))';
             
             
             match arch:
               case "arm32":
-                archTest = 'select(.name | test(\"arm32_binder64\")) |';
+                archTest = 'select(.name | test(\\"arm32_binder64\\")) |';
                 match apps:
                   case "gapps":
-                    appTest = 'select(.name | test(\"gogapps\")) |';
+                    appTest = 'select(.name | test(\\"gogapps\\")) |';
                   case "gogapps":
-                    appTest = 'select(.name | test(\"gogapps\")) |';
+                    appTest = 'select(.name | test(\\"gogapps\\")) |';
                   case _:
-                    appTest = 'select(.name | test(\"vanilla\")) |';
+                    appTest = 'select(.name | test(\\"vanilla\\")) |';
               case _:
-                archTest = 'select(.name | test(\"arm64\")) |';
+                archTest = 'select(.name | test(\\"arm64\\")) |';
             
             match vndklite:
               case "true":
-                vndkliteTest = 'select(.name | test(\"vndklite\")) |';
+                vndkliteTest = 'select(.name | test(\\"vndklite\\")) |';
               case _:
-                vndkliteTest = 'select(.name | test(\"vndklite\") | not) |';
+                vndkliteTest = 'select(.name | test(\\"vndklite\\") | not) |';
             
             match secure:
               case "true":
-                secureTest = 'select(.name | test(\"secure\")) |';
-                vndkliteTest = 'select(.name | test(\"vndklite\")) |';
+                secureTest = 'select(.name | test(\\"secure\\")) |';
+                vndkliteTest = 'select(.name | test(\\"vndklite\\")) |';
               case _:
-                secureTest = 'select(.name | test(\"secure\") | not) |';
+                secureTest = 'select(.name | test(\\"secure\\") | not) |';
             
             finalurlquery = f".assets[] | {appTest} {archTest} {vndkliteTest} {secureTest} .browser_download_url";
             with open(env_file, "a") as g:
