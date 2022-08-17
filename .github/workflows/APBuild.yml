@@ -243,7 +243,8 @@ jobs:
           echo $finalAddress
           wget $finalAddress -O system.img.xz
           xz --decompress system.img.xz
-          rm system.img.xz
+          ls -l
+          # rm ./system.img.xz
           ODM_SIZE=$(stat -c '%s' odm.img)
           SYSTEM_SIZE=$(stat -c '%s' system.img)
           PRODUCT_SIZE=$(stat -c '%s' product.img)
