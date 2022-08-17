@@ -57,6 +57,10 @@ jobs:
         shell: python
         run: |
             import os
+
+            env_file = os.getenv('GITHUB_ENV')
+
+
             url = {}
             apps = "${{ github.event.inputs.apps }}"
             arch = "${{ github.event.inputs.arch }}"
@@ -101,9 +105,8 @@ jobs:
                 secureTest = 'select(.name | test(\"secure\") | not) |';
             
             finalurlquery = f".assets[] | {appTest} {archTest} {vndkliteTest} {secureTest} .browser_download_url";
-            print(finalurlquery)
-            with open(os.getenv("GITHUB_ENV"), "a") as g:
-              g.write(f"urlquery={finalurlquery}\n")
+            with open(env_file, "a") as g:
+              g.write(f"URL_QUERY={finalurlquery}\n")
                 
     
   build:
@@ -170,7 +173,7 @@ jobs:
         run: |
           cd APFiles/APExtracted/superImageFiles/
           rm system.img
-          echo ${{ env.urlquery }}
+          echo ${{ env.URL_QUERY }}
           finalAddress=$(curl -s https://api.github.com/repos/phhusson/treble_experimentations/releases/latest | jq -r " ${{ env.urlquery }} " )
           echo $finalAddress
           # xz --decompress system.img.xz
