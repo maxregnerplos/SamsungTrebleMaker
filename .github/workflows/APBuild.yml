@@ -241,19 +241,20 @@ jobs:
           echo run query
           finalAddress=$(curl -s https://api.github.com/repos/phhusson/treble_experimentations/releases/latest | jq -r " ${{ env.URL_QUERY }} " )
           echo $finalAddress
-          # xz --decompress system.img.xz
-          # rm system.img.xz
-          # ODM_SIZE=$(stat -c '%s' odm.img)
-          # SYSTEM_SIZE=$(stat -c '%s' system.img)
-          # PRODUCT_SIZE=$(stat -c '%s' product.img)
-          # VENDOR_SIZE=$(stat -c '%s' vendor.img)
-          # TOTAL_SIZE=($(echo $ODM_SIZE) + $(echo $SYSTEM_SIZE) + $(echo $PRODUCT_SIZE) + $(echo $VENDOR_SIZE) + ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }})
+          wget $finalAddress -O system.img.xz
+          xz --decompress system.img.xz
+          rm system.img.xz
+          ODM_SIZE=$(stat -c '%s' odm.img)
+          SYSTEM_SIZE=$(stat -c '%s' system.img)
+          PRODUCT_SIZE=$(stat -c '%s' product.img)
+          VENDOR_SIZE=$(stat -c '%s' vendor.img)
+          TOTAL_SIZE=($(echo $ODM_SIZE) + $(echo $SYSTEM_SIZE) + $(echo $PRODUCT_SIZE) + $(echo $VENDOR_SIZE) + ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }})
           
-          # echo "::set-output name=SUM_OF_ALL_PARTITIONS_SIZES::$TOTAL_SIZE"
-          # echo "::set-output name=ODM_PARTITION_SIZE::$ODM_SIZE"
-          # echo "::set-output name=PRODUCT_PARTITION_SIZE::$PRODUCT_SIZE"
-          # echo "::set-output name=SYSTEM_PARTITION_SIZE::$SYSTEM_SIZE"
-          # echo "::set-output name=VENDOR_PARTITION_SIZE::$VENDOR_SIZE"
+          echo "::set-output name=SUM_OF_ALL_PARTITIONS_SIZES::$TOTAL_SIZE"
+          echo "::set-output name=ODM_PARTITION_SIZE::$ODM_SIZE"
+          echo "::set-output name=PRODUCT_PARTITION_SIZE::$PRODUCT_SIZE"
+          echo "::set-output name=SYSTEM_PARTITION_SIZE::$SYSTEM_SIZE"
+          echo "::set-output name=VENDOR_PARTITION_SIZE::$VENDOR_SIZE"
           
           
           
