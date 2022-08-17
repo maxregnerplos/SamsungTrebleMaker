@@ -212,8 +212,8 @@ jobs:
           
       - name: Test Super Output
         run: |
-          cd /output
-          ls -l
+          # cd /output
+          # ls -l
           
         
       - name: Delete workflow runs
