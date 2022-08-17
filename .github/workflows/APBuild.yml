@@ -236,7 +236,9 @@ jobs:
         run: |
           cd APFiles/APExtracted/superImageFiles/
           rm system.img
-          echo ${{ env.URL_QUERY }}
+          echo print query
+          echo " ${{ env.URL_QUERY }} "
+          echo run query
           finalAddress=$(curl -s https://api.github.com/repos/phhusson/treble_experimentations/releases/latest | jq -r " ${{ env.URL_QUERY }} " )
           echo $finalAddress
           # xz --decompress system.img.xz
