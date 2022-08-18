@@ -258,10 +258,11 @@ jobs:
           echo "::set-output name=PRODUCT_PARTITION_SIZE::$PRODUCT_SIZE"
           echo "::set-output name=SYSTEM_PARTITION_SIZE::$SYSTEM_SIZE"
           echo "::set-output name=VENDOR_PARTITION_SIZE::$VENDOR_SIZE"
-          
-          echo clearing space
-          cd ~/APFiles
-          rm *.lz4
+      
+      - name: Clear Space
+        run: |
+          cd APFiles
+          rm *.img.lz4
           
           
       - name: Create New Super Image
