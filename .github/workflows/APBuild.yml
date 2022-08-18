@@ -230,6 +230,8 @@ jobs:
           rm super.img.lz4
           rm super.img
           lpunpack super.ext4.img ./superImageFiles
+          rm super.ext4.img
+
       
       - name: Replace old system image and measure size of partitions
         id: imageSizes
@@ -257,6 +259,9 @@ jobs:
           echo "::set-output name=SYSTEM_PARTITION_SIZE::$SYSTEM_SIZE"
           echo "::set-output name=VENDOR_PARTITION_SIZE::$VENDOR_SIZE"
           
+          echo clearing space
+          cd /APFiles
+          rm *.lz4
           
           
       - name: Create New Super Image
