@@ -262,28 +262,28 @@ jobs:
       - name: Create New Super Image
         id: superImage
         run: |
-          # cd APFiles/APExtracted/superImageFiles/
-          # echo ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }}
-          # lpmake --metadata-size 65536 \
-          # --super-name super \
-          # --metadata-slots 2 \
-          # --device super:${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }} \
-          # --group main:${{ steps.imageSizes.outputs.SUM_OF_ALL_PARTITIONS_SIZES }} \
-          # --partition odm:readonly:${{ steps.imageSizes.outputs.ODM_PARTITION_SIZE }}:main \
-          # --image odm=./odm.img \
-          # --partition product:readonly:${{ steps.imageSizes.outputs.PRODUCT_PARTITION_SIZE }}:main \
-          # --image product=./product.img \
-          # --partition system:readonly:${{ steps.imageSizes.outputs.SYSTEM_PARTITION_SIZE }}:main \
-          # --image system=./system.img \
-          # --partition vendor:readonly:${{ steps.imageSizes.outputs.VENDOR_PARTITION_SIZE }}:main \
-          # --image vendor=./vendor.img \
-          # --sparse \
-          # --output /output/super_new.img
+          cd APFiles/APExtracted/superImageFiles/
+          echo ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }}
+          lpmake --metadata-size 65536 \
+          --super-name super \
+          --metadata-slots 2 \
+          --device super:${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }} \
+          --group main:${{ steps.imageSizes.outputs.SUM_OF_ALL_PARTITIONS_SIZES }} \
+          --partition odm:readonly:${{ steps.imageSizes.outputs.ODM_PARTITION_SIZE }}:main \
+          --image odm=./odm.img \
+          --partition product:readonly:${{ steps.imageSizes.outputs.PRODUCT_PARTITION_SIZE }}:main \
+          --image product=./product.img \
+          --partition system:readonly:${{ steps.imageSizes.outputs.SYSTEM_PARTITION_SIZE }}:main \
+          --image system=./system.img \
+          --partition vendor:readonly:${{ steps.imageSizes.outputs.VENDOR_PARTITION_SIZE }}:main \
+          --image vendor=./vendor.img \
+          --sparse \
+          --output /output/super_new.img
           
       - name: Test Super Output
         run: |
-          # cd /output
-          # ls -l
+          cd /output
+          ls -l
           
         
       - name: Delete workflow runs
