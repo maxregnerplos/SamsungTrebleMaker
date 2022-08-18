@@ -260,7 +260,7 @@ jobs:
           echo "::set-output name=VENDOR_PARTITION_SIZE::$VENDOR_SIZE"
           
           echo clearing space
-          cd /APFiles
+          cd ~/APFiles
           rm *.lz4
           
           
