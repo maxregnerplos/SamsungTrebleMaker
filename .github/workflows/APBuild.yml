@@ -262,7 +262,8 @@ jobs:
       - name: Clear Space
         run: |
           cd APFiles
-          rm ./*.img.lz4 --verbose
+          ls -l
+          # rm ./*.img.lz4 --verbose
           
           
       - name: Create New Super Image
