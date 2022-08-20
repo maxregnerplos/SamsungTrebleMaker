@@ -251,7 +251,13 @@ jobs:
           SYSTEM_SIZE=$(stat -c '%s' system.img)
           PRODUCT_SIZE=$(stat -c '%s' product.img)
           VENDOR_SIZE=$(stat -c '%s' vendor.img)
-          TOTAL_SIZE=($(echo $ODM_SIZE) + $(echo $SYSTEM_SIZE) + $(echo $PRODUCT_SIZE) + $(echo $VENDOR_SIZE) + ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }})
+
+          echo $ODM_SIZE
+          echo $SYSTEM_SIZE
+          echo $PRODUCT_SIZE
+          echo $VENDOR_SIZE
+
+          TOTAL_SIZE=($ODM_SIZE + $SYSTEM_SIZE + $PRODUCT_SIZE + $VENDOR_SIZE + ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }})
           
           echo "::set-output name=SUM_OF_ALL_PARTITIONS_SIZES::$TOTAL_SIZE"
           echo "::set-output name=ODM_PARTITION_SIZE::$ODM_SIZE"
