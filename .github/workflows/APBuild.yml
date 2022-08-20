@@ -257,7 +257,8 @@ jobs:
           echo $PRODUCT_SIZE
           echo $VENDOR_SIZE
 
-          TOTAL_SIZE=($ODM_SIZE + $SYSTEM_SIZE + $PRODUCT_SIZE + $VENDOR_SIZE + ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }})
+          echo $($ODM_SIZE + $SYSTEM_SIZE + $PRODUCT_SIZE + $VENDOR_SIZE + ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }})
+          TOTAL_SIZE=$($ODM_SIZE + $SYSTEM_SIZE + $PRODUCT_SIZE + $VENDOR_SIZE + ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }})
           
           echo "::set-output name=SUM_OF_ALL_PARTITIONS_SIZES::$TOTAL_SIZE"
           echo "::set-output name=ODM_PARTITION_SIZE::$ODM_SIZE"
