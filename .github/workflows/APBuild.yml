@@ -267,10 +267,10 @@ jobs:
         run: |
           import subprocess
 
-          odmSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/odm.img'], stdout=subprocess.PIPE).stdout.decode('utf-8'))
-          systemSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/system.img'], stdout=subprocess.PIPE).stdout.decode('utf-8'))
-          productSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/product.img'], stdout=subprocess.PIPE).stdout.decode('utf-8'))
-          vendorSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/vendor.img'], stdout=subprocess.PIPE).stdout.decode('utf-8'))
+          odmSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/odm.img'], stdout=subprocess.PIPE).stdout.decode('utf-8').replace("'", ''))
+          systemSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/system.img'], stdout=subprocess.PIPE).stdout.decode('utf-8').replace("'", ''))
+          productSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/product.img'], stdout=subprocess.PIPE).stdout.decode('utf-8').replace("'", ''))
+          vendorSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/vendor.img'], stdout=subprocess.PIPE).stdout.decode('utf-8').replace("'", ''))
 
           totalSize = odmSize + systemSize + productSize + vendorSize
 
