@@ -261,6 +261,21 @@ jobs:
           echo "::set-output name=PRODUCT_PARTITION_SIZE::$PRODUCT_SIZE"
           echo "::set-output name=SYSTEM_PARTITION_SIZE::$SYSTEM_SIZE"
           echo "::set-output name=VENDOR_PARTITION_SIZE::$VENDOR_SIZE"
+        
+      - name: Get Image Sizes
+        shell: python
+        run: |
+          import subprocess
+
+          odmSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/odm.img'], stdout=subprocess.PIPE).stdout.decode('utf-8'))
+          systemSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/system.img'], stdout=subprocess.PIPE).stdout.decode('utf-8'))
+          productSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/product.img'], stdout=subprocess.PIPE).stdout.decode('utf-8'))
+          vendorSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/vendor.img'], stdout=subprocess.PIPE).stdout.decode('utf-8'))
+
+          totalSize = odmSize + systemSize + productSize + vendorSize
+
+          with open(env_file, "a") as g:
+              g.write(f"TOTAL_SIZE={totalSize}\n")
       
       - name: Clear Space
         run: |
@@ -273,14 +288,12 @@ jobs:
         id: superImage
         run: |
           cd APFiles/APExtracted/superImageFiles/
-          TOTAL_SIZE=(${{ steps.imageSizes.outputs.ODM_PARTITION_SIZE }} + ${{ steps.imageSizes.outputs.PRODUCT_PARTITION_SIZE }} + ${{ steps.imageSizes.outputs.SYSTEM_PARTITION_SIZE }} + ${{ steps.imageSizes.outputs.VENDOR_PARTITION_SIZE }})
-          echo $TOTAL_SIZE
           echo ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }}
           lpmake --metadata-size 65536 \
           --super-name super \
           --metadata-slots 2 \
           --device super:${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }} \
-          --group main:$(echo $TOTAL_SIZE) \
+          --group main:${{ env.TOTAL_SIZE }} \
           --partition odm:readonly:${{ steps.imageSizes.outputs.ODM_PARTITION_SIZE }}:main \
           --image odm=./odm.img \
           --partition product:readonly:${{ steps.imageSizes.outputs.PRODUCT_PARTITION_SIZE }}:main \
