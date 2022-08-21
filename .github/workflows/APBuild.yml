@@ -266,6 +266,7 @@ jobs:
         shell: python
         run: |
           import subprocess
+          import os
 
           odmSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/odm.img'], stdout=subprocess.PIPE).stdout.decode('utf-8').replace("'", ''))
           systemSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/system.img'], stdout=subprocess.PIPE).stdout.decode('utf-8').replace("'", ''))
