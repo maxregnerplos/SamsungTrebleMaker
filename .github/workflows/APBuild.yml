@@ -273,6 +273,7 @@ jobs:
           vendorSize = int(subprocess.run(['stat', '-c', "'%s'", 'APFiles/APExtracted/superImageFiles/vendor.img'], stdout=subprocess.PIPE).stdout.decode('utf-8').replace("'", ''))
 
           totalSize = odmSize + systemSize + productSize + vendorSize
+          env_file = os.getenv('GITHUB_ENV')
 
           with open(env_file, "a") as g:
               g.write(f"TOTAL_SIZE={totalSize}\n")
