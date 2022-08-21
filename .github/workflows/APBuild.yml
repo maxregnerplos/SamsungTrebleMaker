@@ -312,7 +312,13 @@ jobs:
         run: |
           cd APFiles/APExtracted/superImageFiles/output
           ls -l
-          
+          lz4 -B6 --content-size super_new.img super.img.lz4
+      
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: super_image
+          path: APFiles/APExtracted/superImageFiles/output
         
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@v2.0.3
@@ -330,10 +336,27 @@ jobs:
     runs-on: windows-latest
     needs: build
     steps:
-      - name: testRun
-        run: |
-          cd /
-          ls
+       - name: Checkout Repository
+         uses: actions/checkout@v3
+         
+       - name: Check working directory
+         
+       - name: Set up Python ${{ matrix.python-version }}
+         uses: actions/setup-python@v4
+         with:
+          python-version: "3.10"
+       
+       - name: Setup Dependencies
+         run: |
+          pip install samloader
+          
+       - name: Download a Build Artifact
+         uses: actions/download-artifact@v3.0.0
+         with:
+          # Artifact name
+          name: super_image
+         # Destination path
+          path: ./
           
 
 
