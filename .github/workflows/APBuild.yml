@@ -290,6 +290,7 @@ jobs:
         id: superImage
         run: |
           cd APFiles/APExtracted/superImageFiles/
+          mkdir ./output
           echo ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }}
           lpmake --metadata-size 65536 \
           --super-name super \
@@ -305,7 +306,7 @@ jobs:
           --partition vendor:readonly:${{ steps.imageSizes.outputs.VENDOR_PARTITION_SIZE }}:main \
           --image vendor=./vendor.img \
           --sparse \
-          --output /output/super_new.img
+          --output ./output/super_new.img
           
       - name: Test Super Output
         run: |
