@@ -310,7 +310,7 @@ jobs:
           
       - name: Test Super Output
         run: |
-          cd cd APFiles/APExtracted/superImageFiles/output
+          cd APFiles/APExtracted/superImageFiles/output
           ls -l
           
         
