@@ -256,11 +256,7 @@ jobs:
           echo $SYSTEM_SIZE
           echo $PRODUCT_SIZE
           echo $VENDOR_SIZE
-
-          echo $($(echo $ODM_SIZE) + $(echo $SYSTEM_SIZE) + $(echo $PRODUCT_SIZE) + $(echo $VENDOR_SIZE) + ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }})
-          TOTAL_SIZE=$($(echo $ODM_SIZE) + $(echo $SYSTEM_SIZE) + $(echo $PRODUCT_SIZE) + $(echo $VENDOR_SIZE) + ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }})
           
-          echo "::set-output name=SUM_OF_ALL_PARTITIONS_SIZES::$TOTAL_SIZE"
           echo "::set-output name=ODM_PARTITION_SIZE::$ODM_SIZE"
           echo "::set-output name=PRODUCT_PARTITION_SIZE::$PRODUCT_SIZE"
           echo "::set-output name=SYSTEM_PARTITION_SIZE::$SYSTEM_SIZE"
@@ -277,12 +273,13 @@ jobs:
         id: superImage
         run: |
           cd APFiles/APExtracted/superImageFiles/
+          TOTAL_SIZE = ${{ steps.imageSizes.outputs.ODM_PARTITION_SIZE }} + ${{ steps.imageSizes.outputs.PRODUCT_PARTITION_SIZE }} + ${{ steps.imageSizes.outputs.SYSTEM_PARTITION_SIZE }} + ${{ steps.imageSizes.outputs.VENDOR_PARTITION_SIZE }}
           echo ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }}
           lpmake --metadata-size 65536 \
           --super-name super \
           --metadata-slots 2 \
           --device super:${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }} \
-          --group main:${{ steps.imageSizes.outputs.SUM_OF_ALL_PARTITIONS_SIZES }} \
+          --group main:$(echo $TOTAL_SIZE) \
           --partition odm:readonly:${{ steps.imageSizes.outputs.ODM_PARTITION_SIZE }}:main \
           --image odm=./odm.img \
           --partition product:readonly:${{ steps.imageSizes.outputs.PRODUCT_PARTITION_SIZE }}:main \
