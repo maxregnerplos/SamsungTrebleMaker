@@ -273,7 +273,7 @@ jobs:
         id: superImage
         run: |
           cd APFiles/APExtracted/superImageFiles/
-          TOTAL_SIZE = ${{ steps.imageSizes.outputs.ODM_PARTITION_SIZE }} + ${{ steps.imageSizes.outputs.PRODUCT_PARTITION_SIZE }} + ${{ steps.imageSizes.outputs.SYSTEM_PARTITION_SIZE }} + ${{ steps.imageSizes.outputs.VENDOR_PARTITION_SIZE }}
+          TOTAL_SIZE=(${{ steps.imageSizes.outputs.ODM_PARTITION_SIZE }} + ${{ steps.imageSizes.outputs.PRODUCT_PARTITION_SIZE }} + ${{ steps.imageSizes.outputs.SYSTEM_PARTITION_SIZE }} + ${{ steps.imageSizes.outputs.VENDOR_PARTITION_SIZE }})
           echo ${{ steps.superImageSize.outputs.ORIGINAL_SUPER_IMAGE_SIZE }}
           lpmake --metadata-size 65536 \
           --super-name super \
