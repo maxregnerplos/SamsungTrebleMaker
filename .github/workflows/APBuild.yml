@@ -231,6 +231,14 @@ jobs:
           rm super.img
           lpunpack super.ext4.img ./superImageFiles
           rm super.ext4.img
+          rm vbmeta.img.lz4
+      
+      - name: Upload AP Files
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: AP_Files
+          path: APFiles/APExtracted/*.img.lz4
+
 
       
       - name: Replace old system image and measure size of partitions
@@ -318,7 +326,7 @@ jobs:
         uses: actions/upload-artifact@v3.1.0
         with:
           name: super_image
-          path: APFiles/APExtracted/superImageFiles/output
+          path: APFiles/APExtracted/superImageFiles/output/super.img.lz4
         
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@v2.0.3
@@ -348,18 +356,28 @@ jobs:
          uses: actions/setup-python@v4
          with:
           python-version: "3.10"
-       
-       - name: Setup Dependencies
-         run: |
-          pip install samloader
           
        - name: Download a Build Artifact
          uses: actions/download-artifact@v3.0.0
          with:
           # Artifact name
-          name: super_image
+          name: |
+            - AP_Files
+            - super_image
          # Destination path
-          path: ./
+          path: D:\a\SamsungTrebleMaker\SamsungTrebleMaker\tar-md5-script-tool
+      
+       - name: Build new AP File
+         run: |
+          cd tar-md5-script-tool
+          ./batch.bat
+        
+        - name: Upload AP Files
+          uses: actions/upload-artifact@v3.1.0
+          with:
+            name: Final AP File
+            path: D:\a\SamsungTrebleMaker\SamsungTrebleMaker\tar-md5-script-tool/temp-folder
+        
           
 
 
