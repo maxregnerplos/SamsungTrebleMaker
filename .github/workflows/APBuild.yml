@@ -311,8 +311,8 @@ jobs:
       - name: Test Super Output
         run: |
           cd APFiles/APExtracted/superImageFiles/output
-          ls -l
           lz4 -B6 --content-size super_new.img super.img.lz4
+          ls -l
       
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.0
@@ -339,9 +339,10 @@ jobs:
        - name: Checkout Repository
          uses: actions/checkout@v3
          
-       - name: Check working directory
+       - name: Check working directory and files
          run: |
            pwd
+           ls -l
          
        - name: Set up Python ${{ matrix.python-version }}
          uses: actions/setup-python@v4
