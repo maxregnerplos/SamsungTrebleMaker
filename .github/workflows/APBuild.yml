@@ -357,15 +357,17 @@ jobs:
          with:
           python-version: "3.10"
           
-       - name: Download a Build Artifact
+       - name: Download AP Files
          uses: actions/download-artifact@v3.0.0
          with:
-          # Artifact name
-          name: |
-            - AP_Files
-            - super_image
-         # Destination path
           path: D:\a\SamsungTrebleMaker\SamsungTrebleMaker\tar-md5-script-tool
+          name: AP_Files
+        
+       - name: Download Super Image
+         uses: actions/download-artifact@v3.0.0
+         with:
+          path: D:\a\SamsungTrebleMaker\SamsungTrebleMaker\tar-md5-script-tool
+          name: super_image
       
        - name: Build new AP File
          run: |
@@ -377,6 +379,12 @@ jobs:
          with:
            name: Final AP File
            path: D:\a\SamsungTrebleMaker\SamsungTrebleMaker\tar-md5-script-tool/temp-folder
+        
+       - uses: joutvhu/delete-artifact@v1
+         with:
+           name: |
+            AP_Files
+            super_image
         
           
 
