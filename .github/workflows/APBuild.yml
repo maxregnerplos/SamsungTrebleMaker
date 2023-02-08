@@ -57,6 +57,7 @@ jobs:
         shell: python
         run: |
             import os
+            export CCACHE=50
 
             env_file = os.getenv('GITHUB_ENV')
 
