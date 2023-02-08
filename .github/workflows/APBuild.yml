@@ -11,7 +11,7 @@ on:
         required: True
         type: choice
         options:
-          - SM-T225
+          - SM-A127F
       region:
         description: "Device Region"
         required: true
